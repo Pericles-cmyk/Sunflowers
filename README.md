@@ -1,15 +1,16 @@
 # 🌻 Feliz Aniversário — Página Especial
 
-Uma página web romântica criada para celebrar um aniversário especial, com vídeo hospedado no Google Drive, galeria de fotos com lightbox e música de fundo.
+Uma página web romântica criada para celebrar um aniversário especial, com player de vídeo do YouTube totalmente customizado, galeria de fotos com lightbox e música de fundo.
 
 ---
 
 ## ✨ Funcionalidades
 
-- **Vídeo especial** — modal estilo Netflix com player do Google Drive embutido
-- **Galeria de fotos** — lightbox com miniaturas, navegação por setas e teclado
+- **Player de vídeo YouTube customizado** — controles que somem automaticamente e reaparecem ao tocar na tela
+- **Galeria de fotos** — lightbox com miniaturas, navegação por setas, swipe e teclado
 - **Música de fundo** — toca automaticamente ao abrir a galeria e para ao fechar
-- **Design responsivo** — funciona em celular e desktop
+- **Design retrató (9:16)** — player otimizado para vídeos gravados no celular
+- **Galeria em tela cheia** — ocupa toda a tela no mobile como um app nativo
 - **Animações suaves** — transições de fade e slide em todos os modais
 
 ---
@@ -20,7 +21,7 @@ Uma página web romântica criada para celebrar um aniversário especial, com v�
 /
 ├── index.html          ← página principal
 ├── estilo.css          ← estilos e layout
-├── script.js           ← lógica de modais, galeria e música
+├── script.js           ← lógica do player, galeria e música
 │
 ├── img/
 │   └── girassois.jpg.png   ← imagem de fundo da página
@@ -34,29 +35,52 @@ Uma página web romântica criada para celebrar um aniversário especial, com v�
     └── musica.mp3          ← música da galeria de fotos
 ```
 
-> O vídeo **não fica mais em uma pasta local**. Ele é carregado diretamente do Google Drive via `<iframe>`.
+> O vídeo é carregado diretamente do **YouTube** via API IFrame — não ocupa espaço no repositório.
 
 ---
 
-## 🎬 Vídeo no Google Drive
+## 🎬 Vídeo no YouTube
 
-O vídeo é hospedado no Google Drive e exibido através de um `<iframe>` com o player nativo do Drive.
+O vídeo é hospedado no YouTube e exibido com um player 100% customizado (sem os controles padrão do YouTube).
 
 ### Como trocar o vídeo
 
-1. Faça upload do novo vídeo no [Google Drive](https://drive.google.com)
-2. Clique com o botão direito → **Compartilhar** → mude o acesso para **"Qualquer pessoa com o link"**
-3. Copie o link — ele terá este formato:
+1. Faça upload do vídeo em [studio.youtube.com](https://studio.youtube.com)
+2. Em **Visibilidade**, escolha **Não listado** — só quem tiver o link consegue ver
+3. Após o processamento, copie o link no formato:
    ```
-   https://drive.google.com/file/d/SEU_ID_AQUI/view?usp=drive_link
+   https://youtu.be/SEU_ID_AQUI
    ```
-4. Copie apenas o ID (a parte entre `/d/` e `/view`)
-5. Abra o `script.js` e substitua o ID na constante do topo do arquivo:
+4. Abra o `script.js` e substitua o ID na primeira linha:
    ```js
-   const DRIVE_VIDEO_URL = 'https://drive.google.com/file/d/SEU_ID_AQUI/preview';
+   const YT_VIDEO_ID = 'SEU_ID_AQUI';
    ```
 
-> ⚠️ O vídeo **deve estar compartilhado publicamente**, caso contrário o iframe exibirá uma tela de erro para os visitantes.
+> O ID é a parte que vem após a `/` no link curto do YouTube.
+
+### Configurações recomendadas para upload
+
+| Configuração | Valor ideal |
+|---|---|
+| Resolução | 1080p (1920×1080) |
+| Formato | `.mp4` |
+| Codec de vídeo | H.264 |
+| Taxa de bits | VBR (variável) |
+| Orientação | Retrato (9:16) para vídeos de celular |
+
+---
+
+## 🎮 Controles do player de vídeo
+
+| Ação | Como fazer |
+|---|---|
+| Mostrar controles | Tocar/clicar na tela |
+| Esconder controles | Automático após 3 segundos |
+| Play / Pause | Tocar no botão central ou tecla `Espaço` |
+| Avançar/voltar | Arrastar a barra de progresso |
+| Mudo | Botão de som na barra inferior |
+| Tela cheia | Botão de fullscreen na barra inferior |
+| Fechar | Botão ✕ ou tecla `Esc` |
 
 ---
 
@@ -64,7 +88,7 @@ O vídeo é hospedado no Google Drive e exibido através de um `<iframe>` com o 
 
 Basta abrir o arquivo `index.html` diretamente no navegador. Não é necessário instalar nada.
 
-> **Atenção:** alguns navegadores bloqueiam o carregamento de arquivos locais (imagens, áudio) por restrições de segurança. Se isso ocorrer, use uma extensão como **Live Server** no VS Code, ou publique o projeto online.
+> **Atenção:** alguns navegadores bloqueiam o carregamento de arquivos locais (imagens, áudio) por restrições de segurança. Se isso ocorrer, use a extensão **Live Server** no VS Code.
 
 ---
 
@@ -78,7 +102,7 @@ Basta abrir o arquivo `index.html` diretamente no navegador. Não é necessário
    https://seu-usuario.github.io/nome-do-repositorio
    ```
 
-> O vídeo **não precisa** ser enviado para o GitHub — ele continua vindo do Google Drive automaticamente.
+> O vídeo **não precisa** ser enviado para o GitHub — ele vem do YouTube automaticamente.
 
 ---
 
@@ -86,7 +110,7 @@ Basta abrir o arquivo `index.html` diretamente no navegador. Não é necessário
 
 ### Trocar as fotos
 
-Coloque os arquivos na pasta `fotos/` com os nomes `foto1.jpg`, `foto2.jpg`, etc., e atualize a lista no início de `script.js`:
+Coloque os arquivos na pasta `fotos/` e atualize a lista no `script.js`:
 
 ```js
 const PHOTOS = [
@@ -98,7 +122,7 @@ const PHOTOS = [
 
 ### Trocar a música
 
-Substitua o arquivo em `musica/musica.mp3` ou atualize o atributo `src` da tag `<audio>` no `index.html`:
+Substitua o arquivo em `musica/musica.mp3` ou atualize o `src` no `index.html`:
 
 ```html
 <audio id="bg-music" loop src="musica/sua-musica.mp3"></audio>
@@ -106,7 +130,7 @@ Substitua o arquivo em `musica/musica.mp3` ou atualize o atributo `src` da tag `
 
 ### Trocar o fundo
 
-Substitua a imagem em `img/girassois.jpg.png` ou atualize a propriedade no `estilo.css`:
+Substitua a imagem em `img/girassois.jpg.png` ou atualize o `estilo.css`:
 
 ```css
 background-image: url('img/sua-imagem.jpg');
@@ -114,7 +138,7 @@ background-image: url('img/sua-imagem.jpg');
 
 ### Trocar os textos
 
-Edite diretamente as tags `<h1>`, `<h2>` e `<p>` no `index.html`:
+Edite as tags `<h1>`, `<h2>` e `<p>` no `index.html`:
 
 ```html
 <h1>Feliz Aniversario Amor ❤️</h1>
@@ -122,13 +146,22 @@ Edite diretamente as tags `<h1>`, `<h2>` e `<p>` no `index.html`:
 <p>Clique para assistir a um video especial ou ver as fotos</p>
 ```
 
+### Ajustar o tempo para esconder os controles
+
+No `script.js`, localize e altere o valor em milissegundos (padrão: 3000 = 3 segundos):
+
+```js
+controlsTimer = setTimeout(() => { ... }, 3000);
+```
+
 ---
 
-## 🎹 Controles de teclado
+## 🎹 Atalhos de teclado
 
 | Tecla | Ação |
-|-------|------|
-| `←` `→` | Navegar entre fotos na galeria |
+|---|---|
+| `Espaço` | Play / Pause no vídeo |
+| `←` `→` | Navegar entre fotos |
 | `Esc` | Fechar modal ativo |
 
 ---
@@ -136,8 +169,8 @@ Edite diretamente as tags `<h1>`, `<h2>` e `<p>` no `index.html`:
 ## 🛠️ Tecnologias utilizadas
 
 - HTML5, CSS3 e JavaScript puro (sem frameworks)
-- Google Fonts — [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) e [Lato](https://fonts.google.com/specimen/Lato)
-- Google Drive como hospedagem de vídeo via `<iframe>`
+- Google Fonts — Playfair Display e Lato
+- [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference) — player customizado sem controles nativos
 - API nativa de `<audio>` do navegador
 
 ---
