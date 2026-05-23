@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#000000"/>
+  <title>Parabéns Meu Amor ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="estilo.css"/>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+  <div class="card">
+    <h1>Feliz Aniversario Amor ❤️</h1>
+    <h2>O dia é todo seu ❤️</h2>
+    <p>Clique para assistir a um video especial ou ver as fotos</p>
+    <div class="btn-group">
+      <button class="btn-video" onclick="openModal()">▶ Assistir Vídeo</button>
+      <button class="btn-fotos" onclick="openPhotos()">📸 Me and You ❤️</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VÍDEO -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box" id="modal-box-video">
+    <!-- Player YouTube -->
+    <div class="video-container" id="yt-container">
+      <div id="yt-player"></div>
+
+      <!-- Camada de controles customizados -->
+      <div class="yt-controls" id="yt-controls">
+
+        <!-- Topo: botão fechar -->
+        <div class="yt-top-bar">
+          <button class="btn-close-video" onclick="closeModal()" title="Fechar">✕</button>
+        </div>
+
+        <!-- Centro: play/pause -->
+        <div class="yt-center">
+          <button class="btn-play-pause" id="btn-play-pause" onclick="togglePlay()">
+            <svg id="icon-play" viewBox="0 0 24 24" fill="white" width="36" height="36"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="icon-pause" viewBox="0 0 24 24" fill="white" width="36" height="36" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+        </div>
+
+        <!-- Barra inferior: tempo + seek + volume + fullscreen -->
+        <div class="yt-bottom-bar">
+          <div class="yt-seek-row">
+            <span class="yt-time" id="yt-current-time">0:00</span>
+            <div class="yt-seek-wrap">
+              <div class="yt-seek-track" id="yt-seek-track">
+                <div class="yt-seek-fill" id="yt-seek-fill"></div>
+                <div class="yt-seek-thumb" id="yt-seek-thumb"></div>
+              </div>
+            </div>
+            <span class="yt-time" id="yt-duration">0:00</span>
+          </div>
+          <div class="yt-actions-row">
+            <button class="yt-btn-icon" onclick="toggleMute()" title="Mudo">
+              <svg id="icon-sound" viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              <svg id="icon-mute" viewBox="0 0 24 24" fill="white" width="22" height="22" style="display:none"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            </button>
+            <button class="yt-btn-icon" onclick="toggleFullscreen()" title="Tela cheia">
+              <svg id="icon-fs" viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /yt-controls -->
+    </div><!-- /yt-container -->
+  </div>
+</div>
+
+<!-- MODAL FOTOS -->
+<div class="modal-overlay" id="modal-fotos">
+  <div class="modal-box modal-fotos-box">
+    <button class="btn-close" onclick="closePhotos()" title="Fechar">✕</button>
+    <div class="lightbox-main">
+      <button class="lb-arrow lb-prev" onclick="changePhoto(-1)">&#8249;</button>
+      <img id="lb-img" src="" alt="Foto" draggable="false"/>
+      <button class="lb-arrow lb-next" onclick="changePhoto(1)">&#8250;</button>
+    </div>
+    <div class="lb-bottom">
+      <div class="lb-counter"><span id="lb-current">1</span> / <span id="lb-total">1</span></div>
+      <div class="lb-thumbs" id="lb-thumbs"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MÚSICA DA GALERIA -->
+<audio id="bg-music" loop src="musica/musica.mp3"></audio>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="script.js"></script>
+</body>
+</html>
